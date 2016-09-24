@@ -102,86 +102,134 @@ class Othello:
 
 	
 	def getMoves(self, position, player):
+		"""
+		The operator not yields True if its argument is false, False otherwise.
+
+		The expression x and y first evaluates x; if x is false, its value is returned; otherwise, y is evaluated and the resulting value is returned.
+
+		The expression x or y first evaluates x; if x is true, its value is returned; otherwise, y is evaluated and the resulting value is returned.
+		"""
 		moves = []
 		row, col = position
 		#s = [self._PLAYER_WHITE, self._PLAYER_BLACK]
 		#opp_player = list(set(s).difference([player]))
+		
+		# row-i, col + i
 		for i in range(1, 9):
-			if col + i > 9 and row - i < 0:
+			if col + i > 8 and row - i < 0:
+				#print("I broke here", row, col)
 				break
 			if i == 1 and (self._gameboard[row-i][col+i] == 0 or self._gameboard[row-i][col+i] == "*"):
+				#print("I broke her", row, col)
 				break 
-			if self._gameboard[row-i][col+i] == 0:
-				#print("Move appended") 
+			if self._gameboard[row-i][col+i] == 0 and self._gameboard[row-i+1][col+i-1] != player:
+				#print("Move appended: row-i, col+i, ",row-i, col+i) 
 				moves.append((row-i, col+i))
 				break
+
+		# row, col + i
 		for i in range(1, 9):
-			if col + i > 9:
+			if col + i > 8:
+				#print("I broke here", row, col)
 				break
 			if i == 1 and (self._gameboard[row][col+i] == 0 or self._gameboard[row][col+i] == "*"):
+				#print("I broke her", row, col)
 				break 
-			if self._gameboard[row][col+i] == 0:
-				#print("Move appended") 
+			if self._gameboard[row][col+i] == 0 and self._gameboard[row][col+i-1] != player:
+				#print("Move appended: row, col+i ", row, col+i) 
 				moves.append((row, col+i))
+				break
+
+		# row-i, col - i
 		for i in range(1, 9):
 			if col - i < 0 or row - i < 0:
+				#print("I broke here", row, col)
 				break
 			if i == 1 and (self._gameboard[row-i][col-i] == 0 or self._gameboard[row-i][col-i] == "*"):
+				#print("I broke her", row, col)
 				break 
-			if self._gameboard[row-i][col-i] == 0: 
-				#print("Move appended")
+			if self._gameboard[row-i][col-i] == 0 and self._gameboard[row-i+1][col-i+1] != player: 
+				#print("Move appended: row-i, col-i ", row-i, col-i)
 				moves.append((row-i, col-i))
+				break
+
+		# row+i, col + i
 		for i in range(1, 9):
-			if col + i > 9 or  row + i > 9:
+			if col + i > 8 or  row + i > 8:
+				#print("I broke here", row, col)
 				break
 			if i == 1 and (self._gameboard[row+i][col+i] == 0 or self._gameboard[row+i][col+i] == "*"):
+				#print("I broke her", row, col)
 				break 
-			if self._gameboard[row+i][col+i] == 0:
-				#print("Move appended") 
+			if self._gameboard[row+i][col+i] == 0 and self._gameboard[row+i-1][col+i-1] != player:
+				#print("Move appended: row+i, col+i ", row+i, col+i) 
 				moves.append((row+i, col+i))
+				break
+
+		# row-i, col
 		for i in range(1, 9):
 			if row - i < 0:
+				#print("I broke here", row, col)
 				break
 			if i == 1 and (self._gameboard[row-i][col] == 0 or self._gameboard[row-i][col] == "*"):
+				#print("I broke her", row, col)
 				break 
-			if self._gameboard[row-i][col] == 0:
-				#print("Move appended") 
+			if self._gameboard[row-i][col] == 0 and self._gameboard[row-i+1][col] != player:
+				#print("Move appended: row-i, col ", row-i, col) 
 				moves.append((row-i, col))
+				break
+
+		# row, col - i
 		for i in range(1, 9):
 			if col - i < 0:
+				#print("I broke here", row, col)
 				break
 			if i == 1 and (self._gameboard[row][col-i] == 0 or self._gameboard[row][col-i] == "*"):
+				#print("I broke her", row, col)
 				break 
-			if self._gameboard[row][col-i] == 0:
-				#print("Move appended") 
-				moves.append((row, col-i))	
+			if self._gameboard[row][col-i] == 0 and self._gameboard[row][col-i+1] != player:
+				#print("Move appended: row, col-i ", row, col-i) 
+				moves.append((row, col-i))
+				break
+
+		# row + i, col	
 		for i in range(1, 9):
-			if row + i > 9:
+			if row + i > 8:
+				#print("I broke here", row, col)
 				break
 			if i == 1 and (self._gameboard[row+i][col] == 0 or self._gameboard[row+i][col] == "*"):
+				#print("I broke her", row, col)
 				break 
-			if self._gameboard[row+i][col] == 0:
-				#print("Move appended") 
-				moves.append((row+i, col))	
+			if self._gameboard[row+i][col] == 0 and self._gameboard[row+i-1][col] != player:
+				#print("Move appended: row+i, col ", row+i, col) 
+				moves.append((row+i, col))
+				break
+
+		# row + i, col - i	
 		for i in range(1, 9):
-			if col - i < 0 or row + i > 9:
+			if col - i < 0 or row + i > 8:
+				print("I broke here", row, col)
 				break
 			if i == 1 and (self._gameboard[row+i][col-i] == 0 or self._gameboard[row+i][col-i] == "*"):
+				print("I broke her", row, col)
 				break 
-			if self._gameboard[row+i][col-i] == 0:
-				#print("Move appended") 
+			if self._gameboard[row+i][col-i] == 0 and self._gameboard[row+i-1][col-i+1] != player:
+				print("Move appended: row+i, col-i ", row+i, col-i ) 
 				moves.append((row+i, col-i))
+				break
+
 		return moves
 	
 	def getLegalMoves(self, player):
 		self._validate_player(player)
 		query_list = self.allPositions(player)
+		print(query_list)
 		results_list = []
 		for position in query_list:
 			results_list.append(self.getMoves(position, player))
 		results_list = [value[n] for idx, value in enumerate(results_list) for n in range(len(value))]
 		results_list[:] = [results_list[i] for i in range(len(results_list)) if i == results_list.index(results_list[i])] 
-		#print(results_list)
+		print(results_list)
 		return results_list
 	
 	def place(self, player, position_to_move):
@@ -224,10 +272,10 @@ if __name__ == '__main__':
 	o = Othello()
 	print(o)
 	white_list = [(3, 6), (4, 2), (5, 4), (5, 5), (5, 7), (5, 8), (6, 4), (7, 3)]
-	black_list = [(3, 3), (3, 4), (3, 8), (4, 3),(4, 4), (4, 5), (4, 6),
+	black_list = [(3, 3), (3, 4), (3, 5), (3, 8), (4, 3),(4, 4), (4, 5), (4, 6),
 				(4, 7), (5, 2), (5, 3), (5, 6), (6, 5), (6, 6), (7, 5)]
 	o.generateBoards(black_list, white_list)
 	print(o)
 	#print(o.allPositions(o.PLAYER_BLACK))
 	#print(o.allPositions(o.PLAYER_WHITE))
-	print(o.place(o.PLAYER_WHITE, (4, 8)))
+	print(o.place(o.PLAYER_WHITE, (8, 2)))
