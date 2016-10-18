@@ -10,7 +10,7 @@ This is a game-playing AI for the game [Othello](https://en.wikipedia.org/wiki/R
 
 ### Features
 
-- [*] Written in Python
+- [x] Written in Python
 - [ ] A GUI in Pygame/wxPython
 - [ ] Async
 - [ ] Sockets/Websockets to play multiplayer
