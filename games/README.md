@@ -4,7 +4,7 @@ This is a game-playing AI for the game [Othello](https://en.wikipedia.org/wiki/R
 
 ## Files
 
-- rec_othello.py Barebones two-player game with no computer and no AI
+- NoAIOthello.py Better two-player game with no AI
 
 
 ### Features
@@ -16,4 +16,4 @@ This is a game-playing AI for the game [Othello](https://en.wikipedia.org/wiki/R
   - Alpha-beta pruning
 
 To run:
-> ./othello.py
+> ./NoAIOthello.py
