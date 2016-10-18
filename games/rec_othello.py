@@ -93,7 +93,7 @@ class Othello:
             return(64 - (len(self.black_curr_pos) + len(self.white_curr_pos)))
 
         def getMoves(self, position, player):
-            """
+            """                    
             This helper method returns a list of moves for a given position. The algorithm goes thus:
 
             While the number of columns or rows have not been exceeded:
@@ -198,7 +198,6 @@ class Othello:
                     break
 
             return moves
-
 
         def getFlips(self, player, opp_player, position_to_move):
 
