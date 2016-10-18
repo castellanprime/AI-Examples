@@ -23,17 +23,18 @@ class GameState:
 	w_corner_adj_num = -100		# weight attached to the corner adjacent positions held by the player
 	#w_empty_adj_num = 20		# weight attached to the empty spaces related to the number
 
-	def __init__(self, player, board, computer= False, minimax=False, weights=None):
+	def __init__(self, player, board, player_selection, minimax=False, weights=None):
 		self.board = board
 		self.turn = player
 		self.next_moves = self.board.getLegalMoves(self.turn)
-		self.minimax_move = None
+		self.computer_move = None
+		self.player_selection = player_selection
+		self.who_plays_now = player_selection[self.turn]
+		if minimax:
+			self.setMinimaxMove('stuff')
 		if weights:
 			self.changeWeights(weights)
-		if minimax:
-			self.sef = SEF(self.board)
-		else:
-			self.sef = 0
+		
 
 	def SEF(self, board):
 		""" This computes the SEF for a particular board from the following values
@@ -53,6 +54,9 @@ class GameState:
 
 	def setMinimaxMove(self, move):
 		self.minmax_move = move
+
+	def setPlayerSelection(self, p_player):
+		self.player_selection = {}
 
 	def changeWeights(weights):
 		for key, value in weights.items():
@@ -115,9 +119,11 @@ class Board:
 				position: A tuple indicating the particular cell to place the player in 
 		"""
 		if player == self.player_one:
-			self.black_curr_pos.remove(position)
+			if position in self.black_curr_pos:
+				self.black_curr_pos.remove(position)
 		elif player == self.player_two:
-			self.white_curr_pos.remove(position)
+			if position in self.white_curr_pos:
+				self.white_curr_pos.remove(position)
 
 
 	def getNoOfFlippedPieces(self, player):
@@ -290,7 +296,7 @@ class Board:
 				break 
 			if self.gameboard[row][col-i] == '*':
 				break
-			if self.gameboard[row][col-i] == '-' and (self.gameboard[row][(col-i)+1] != player and self.gameboard[row][(col-i)+1] != '='):
+			if self.gameboard[row][col-i] == '-' and (self.gameboard[row][(col-i)+1] != player and self.gameboard[row][(col-i)+1] != '-'):
 				moves.append((row, col-i))
 				#print(player, " You have appended me ", (row, col-i))
 				break
