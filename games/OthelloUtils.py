@@ -222,7 +222,9 @@ class Board:
 			if col + i > 8 and row - i < 0:
 				break
 			if i == 1 and (self.gameboard[row-i][col+i] == '-' or self.gameboard[row-i][col+i] == "*"):
-				break 
+				break
+			if self.gameboard[row-i][col+i] == '*':
+				break
 			if self.gameboard[row-i][col+i] == '-' and (self.gameboard[(row-i)+1][col+(i-1)] != player and self.gameboard[(row-i)+1][col+(i-1)] != '-'):
 				moves.append((row-i, col+i))
 				#print(player, " You have appended me ", (row-i, col+i))
@@ -233,6 +235,8 @@ class Board:
 			if col + i > 8:
 				break
 			if i == 1 and (self.gameboard[row][col+i] == '-' or self.gameboard[row][col+i] == "*"):
+				break
+			if self.gameboard[row][col+i] == '*':
 				break 
 			if self.gameboard[row][col+i] == '-' and (self.gameboard[row][col+(i-1)] != player and self.gameboard[row][col+(i-1)] != '-'): 
 				moves.append((row, col+i))
@@ -245,6 +249,8 @@ class Board:
 				break
 			if i == 1 and (self.gameboard[row-i][col-i] == '-' or self.gameboard[row-i][col-i] == "*"):
 				break 
+			if self.gameboard[row-i][col-i] == '*':
+				break
 			if self.gameboard[row-i][col-i] == '-' and (self.gameboard[(row-i)+1][(col-i)+1] != player and self.gameboard[(row-i)+1][(col-i)+1] != '-') : 
 				moves.append((row-i, col-i))
 				#print(player, " You have appended me ", (row-i, col-i))
@@ -256,6 +262,8 @@ class Board:
 				break
 			if i == 1 and (self.gameboard[row+i][col+i] == '-' or self.gameboard[row+i][col+i] == "*"):
 				break 
+			if self.gameboard[row+i][col+i] == '*':
+				break
 			if self.gameboard[row+i][col+i] == '-' and (self.gameboard[row+(i-1)][col+(i-1)] != player and self.gameboard[row+(i-1)][col+(i-1)] != '-'):
 				moves.append((row+i, col+i))
 				#print(player, " You have appended me ", (row+i, col+i))
@@ -267,6 +275,8 @@ class Board:
 				break
 			if i == 1 and (self.gameboard[row-i][col] == '-' or self.gameboard[row-i][col] == "*"):
 				break 
+			if self.gameboard[row-i][col] == '*':
+				break
 			if self.gameboard[row-i][col] == '-' and (self.gameboard[(row-i)+1][col] != player and self.gameboard[(row-i)+1][col] != '-'):
 				moves.append((row-i, col))
 				#print(player, " You have appended me ", (row-i, col))
@@ -278,6 +288,8 @@ class Board:
 				break
 			if i == 1 and (self.gameboard[row][col-i] == '-' or self.gameboard[row][col-i] == "*"):
 				break 
+			if self.gameboard[row][col-i] == '*':
+				break
 			if self.gameboard[row][col-i] == '-' and (self.gameboard[row][(col-i)+1] != player and self.gameboard[row][(col-i)+1] != '='):
 				moves.append((row, col-i))
 				#print(player, " You have appended me ", (row, col-i))
@@ -289,6 +301,8 @@ class Board:
 				break
 			if i == 1 and (self.gameboard[row+i][col] == '-' or self.gameboard[row+i][col] == "*"):
 				break 
+			if self.gameboard[row+i][col] == '*':
+				break
 			if self.gameboard[row+i][col] == '-' and (self.gameboard[row+(i-1)][col] != player and self.gameboard[row+(i-1)][col] != '-'):
 				moves.append((row+i, col))
 				#print(player, " You have appended me ", (row+i, col))
@@ -300,6 +314,8 @@ class Board:
 				break
 			if i == 1 and (self.gameboard[row+i][col-i] == '-' or self.gameboard[row+i][col-i] == "*"):
 				break 
+			if self.gameboard[row+i][col-i] == '*':
+				break
 			if self.gameboard[row+i][col-i] == '-' and (self.gameboard[row+(i-1)][(col-i)+1] != player and self.gameboard[row+(i-1)][(col - i)+1] != '-'): 
 				moves.append((row+i, col-i))
 				#print(player, " You have appended me ", (row+i, col-i))
@@ -484,7 +500,7 @@ class Board:
 
 		if len(self.white_curr_pos) > len(self.black_curr_pos):
 			return "{0} wins.He/she has {1} pieces - {2} pieces".format(self.player_two, len(self.white_curr_pos), len(self.black_curr_pos))
-		elif len(white_curr_pos) < len(black_curr_pos):
+		elif len(self.white_curr_pos) < len(self.black_curr_pos):
 			return "{0} wins.He/she has {1} pieces - {2} pieces".format(self.player_one, len(self.black_curr_pos), len(self.white_curr_pos))
 		else:
 			return "Draw. Neither {0} nor {1} wins!!".format(self.player_one, self.player_two)

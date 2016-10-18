@@ -12,7 +12,12 @@ import sys
 import re
 import os
 import random
+import copy
+import logging
 from OthelloUtils import GameState, Board
+
+
+logging.basicConfig(filename="game.log", filemode='a', level=logging.INFO)
 
 class Othello:
 
@@ -77,6 +82,7 @@ class Othello:
 		# If player has legal moves	
 		if self.state.next_moves:
 			print("Legal moves for ", player, " = ", self.state.next_moves)
+			logging.info("Legal moves for %s = %s", player, self.state.next_moves)
 			if position_to_move not in self.state.next_moves:
 				return "\nPlayer {0}'s move:{1} Return_code:{2}\n".format(player, position_to_move, self.ERROR)
 			self.flip_opp_player_positions(player, opp_player, position_to_move)
@@ -87,7 +93,8 @@ class Othello:
 		if player_opp != None:
 			self.state = Gamestate(opp_player, self.state.board)
 			if self.state.next_moves:
-				print("Legal moves for ", opp_player, " = ", self.state.next_moves)
+				#print("Legal moves for ", opp_player, " = ", self.state.next_moves)
+				logging.info("Legal moves for %s = %s", player, self.state.next_moves)
 				if position_to_move not in self.state.next_moves:
 					return "\nPlayer {0}'s move:{1} Return_code:{2}\n".format(player, position_to_move, self.ERROR)
 				self.flip_opp_player_positions(player, opp_player, position_to_move)
@@ -119,7 +126,8 @@ class Othello:
 		"""
 
 		l = self.state.board.getFlips(player, opp_player, position_to_move)
-		print(opp_player, "'s positions to flip = " , l)
+		#print(opp_player, "'s positions to flip = " , l)
+		logging.info("%s 's positions to flip = %s", opp_player, l)
 		self.state.board.h_setPosition(player, position_to_move)
 		for value in l:
 			self.state.board.h_setPosition(player, value)
@@ -157,6 +165,7 @@ class Othello:
 		try:
 			str = "{0} plays now".format(self.state.turn)
 			print(str)
+			logging.info("%s", str)
 			temp_input = input("Enter your position(row, col) (ex: 4 3): ")
 			input_position = tuple(map(int, temp_input.split(' ')))
 			self.__validate_position(input_position)
@@ -168,6 +177,7 @@ class Othello:
 				sys.exit(0)
 			except SystemExit:
 				os._exit(0)
+		logging.info("%s", input_position)
 		return input_position
     
 	def human_play(self):
@@ -176,6 +186,7 @@ class Othello:
 
 		while True:
 			print(self.state.board.__str__())
+			logging.info("%s", self.state.board.__str__())
 
 			# First input
 			position = self.get_input()									
@@ -189,13 +200,15 @@ class Othello:
 
 			# If move is not in self.state.moves
 			while len(re.findall(r'invalid move', status_message)) > 0:	
-				print(status_message)		
+				print(status_message)
+				logging.info("%s", status_message)		
 				position = self.get_input()
 				status_message = self.place(position) 
 
 			# If there are not legal moves
 			if len(re.findall(r'no moves available', status_message)) > 0:
-				print(status_message)		
+				print(status_message)
+				logging.info("%s", status_message)		
 				print("Entering legal moves")
 				# Get the opposite player to play
 				opp_player = self.get_opp_player(self.state.turn)				
@@ -203,13 +216,17 @@ class Othello:
 				# If oppposite player does not have legal moves
 				if len(re.findall(r'no moves available', status_message)) > 0:
 					print(self.state.board.win_or_lose())
+					logging.info("%s", self.state.board.win_or_lose())
 					print(self.__GAME_END)
+					logging.info("%s", self.__GAME_END)
 					return
 
 			# If the game is finished
 			if self.state.board.get_no_of_spaces() == 0:
 				print(self.state.board.win_or_lose())
+				logging.info("%s", self.state.board.win_or_lose())
 				print(self.__GAME_END)
+				logging.info("%s", self.__GAME_END)
 				return
 
 def main_loop():
